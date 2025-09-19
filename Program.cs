@@ -42,6 +42,13 @@ app.MapGet("/users/{id:int}", (int id) =>
 // Create user
 app.MapPost("/users", (User user) =>
 {
+	if (string.IsNullOrWhiteSpace(user.FirstName) ||
+		string.IsNullOrWhiteSpace(user.LastName) ||
+		string.IsNullOrWhiteSpace(user.Email) ||
+		string.IsNullOrWhiteSpace(user.Role))
+	{
+		return Results.BadRequest("All fields are required and cannot be empty.");
+	}
 	var id = nextId++;
 	if (!users.TryAdd(id, user))
 		return Results.Problem("Could not add user.");
@@ -51,6 +58,13 @@ app.MapPost("/users", (User user) =>
 // Update user
 app.MapPut("/users/{id:int}", (int id, User updatedUser) =>
 {
+	if (string.IsNullOrWhiteSpace(updatedUser.FirstName) ||
+		string.IsNullOrWhiteSpace(updatedUser.LastName) ||
+		string.IsNullOrWhiteSpace(updatedUser.Email) ||
+		string.IsNullOrWhiteSpace(updatedUser.Role))
+	{
+		return Results.BadRequest("All fields are required and cannot be empty.");
+	}
 	if (!users.ContainsKey(id))
 		return Results.NotFound();
 	users[id] = updatedUser;

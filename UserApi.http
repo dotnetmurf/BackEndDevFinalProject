@@ -36,3 +36,31 @@ Content-Type: application/json
 ###
 # Delete a user (replace with actual ID)
 DELETE {{baseUrl}}/users/5
+
+###
+# Create a new user with an empty first name to test validation
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "firstName": "",
+  "lastName": "Smith",
+  "email": "alice.smith@example.com",
+  "role": "Admin"
+}
+
+
+###
+# Update a user with an empty last name to test validation
+PUT {{baseUrl}}/users/3
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "",
+  "email": "alice.johnson@example.com",
+  "role": "User"
+}
+
+###
+
