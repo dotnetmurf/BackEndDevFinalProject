@@ -1,0 +1,38 @@
+### Test all CRUD endpoints for User Management API
+
+@baseUrl = http://localhost:5164
+
+# Create a new user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "alice.smith@example.com",
+  "role": "Admin"
+}
+
+###
+# Get all users
+GET {{baseUrl}}/users
+
+###
+# Get a user by ID (replace with actual ID from create response)
+GET {{baseUrl}}/users/2
+
+###
+# Update a user (replace with actual ID)
+PUT {{baseUrl}}/users/3
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "email": "alice.johnson@example.com",
+  "role": "User"
+}
+
+###
+# Delete a user (replace with actual ID)
+DELETE {{baseUrl}}/users/5
