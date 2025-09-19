@@ -90,3 +90,33 @@ Content-Type: application/json
 
 ###
 
+# Create a new user with an invalid role to test validation
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "alice.smith@example.com",
+  "role": "Guest"
+}
+
+
+###
+# Update a user with an invalid role to test validation
+PUT {{baseUrl}}/users/3
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "email": "alice.johnson@example.com",
+  "role": "PowerUser"
+}
+
+###
+# Get all users
+GET {{baseUrl}}/users
+
+###
+

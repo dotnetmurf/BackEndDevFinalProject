@@ -63,9 +63,27 @@ app.MapPost("/users", (User user) =>
 	{
 		return Results.BadRequest("All fields are required and cannot be empty.");
 	}
+	if (user.FirstName.Length > 50)
+		return Results.BadRequest("FirstName cannot exceed 50 characters.");
+	if (user.LastName.Length > 50)
+		return Results.BadRequest("LastName cannot exceed 50 characters.");
+	if (user.Email.Length > 75)
+		return Results.BadRequest("Email cannot exceed 75 characters.");
+	if (user.Role.Length > 10)
+		return Results.BadRequest("Role cannot exceed 10 characters.");
 	if (!IsValidEmail(user.Email))
 	{
 		return Results.BadRequest("Email is not in a valid format.");
+	}
+	if (!string.Equals(user.Role, "Admin", StringComparison.OrdinalIgnoreCase) &&
+		!string.Equals(user.Role, "User", StringComparison.OrdinalIgnoreCase))
+	{
+		return Results.BadRequest("Role must be either 'Admin' or 'User'.");
+	}
+	// Duplicate email check
+	if (users.Values.Any(u => u.Email.Equals(user.Email, StringComparison.OrdinalIgnoreCase)))
+	{
+		return Results.BadRequest("A user with this email already exists.");
 	}
 	var id = nextId++;
 	if (!users.TryAdd(id, user))
@@ -83,9 +101,27 @@ app.MapPut("/users/{id:int}", (int id, User updatedUser) =>
 	{
 		return Results.BadRequest("All fields are required and cannot be empty.");
 	}
+	if (updatedUser.FirstName.Length > 50)
+		return Results.BadRequest("FirstName cannot exceed 50 characters.");
+	if (updatedUser.LastName.Length > 50)
+		return Results.BadRequest("LastName cannot exceed 50 characters.");
+	if (updatedUser.Email.Length > 75)
+		return Results.BadRequest("Email cannot exceed 75 characters.");
+	if (updatedUser.Role.Length > 10)
+		return Results.BadRequest("Role cannot exceed 10 characters.");
 	if (!IsValidEmail(updatedUser.Email))
 	{
 		return Results.BadRequest("Email is not in a valid format.");
+	}
+	if (!string.Equals(updatedUser.Role, "Admin", StringComparison.OrdinalIgnoreCase) &&
+		!string.Equals(updatedUser.Role, "User", StringComparison.OrdinalIgnoreCase))
+	{
+		return Results.BadRequest("Role must be either 'Admin' or 'User'.");
+	}
+	// Duplicate email check (exclude current user)
+	if (users.Any(kvp => kvp.Key != id && kvp.Value.Email.Equals(updatedUser.Email, StringComparison.OrdinalIgnoreCase)))
+	{
+		return Results.BadRequest("A user with this email already exists.");
 	}
 	if (!users.ContainsKey(id))
 		return Results.NotFound();
