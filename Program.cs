@@ -39,6 +39,20 @@ app.MapGet("/users/{id:int}", (int id) =>
 		: Results.NotFound()
 );
 
+// Email format validation helper
+static bool IsValidEmail(string email)
+{
+	try
+	{
+		var addr = new System.Net.Mail.MailAddress(email);
+		return addr.Address == email;
+	}
+	catch
+	{
+		return false;
+	}
+}
+
 // Create user
 app.MapPost("/users", (User user) =>
 {
@@ -48,6 +62,10 @@ app.MapPost("/users", (User user) =>
 		string.IsNullOrWhiteSpace(user.Role))
 	{
 		return Results.BadRequest("All fields are required and cannot be empty.");
+	}
+	if (!IsValidEmail(user.Email))
+	{
+		return Results.BadRequest("Email is not in a valid format.");
 	}
 	var id = nextId++;
 	if (!users.TryAdd(id, user))
@@ -64,6 +82,10 @@ app.MapPut("/users/{id:int}", (int id, User updatedUser) =>
 		string.IsNullOrWhiteSpace(updatedUser.Role))
 	{
 		return Results.BadRequest("All fields are required and cannot be empty.");
+	}
+	if (!IsValidEmail(updatedUser.Email))
+	{
+		return Results.BadRequest("Email is not in a valid format.");
 	}
 	if (!users.ContainsKey(id))
 		return Results.NotFound();

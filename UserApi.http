@@ -62,5 +62,31 @@ Content-Type: application/json
   "role": "User"
 }
 
+
+###
+# Create a new user with an invalid email format to test validation
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "alice.smith",
+  "role": "Admin"
+}
+
+
+###
+# Update a user with an invalid email format to test validation
+PUT {{baseUrl}}/users/3
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "email": "alice.johnson-example.com",
+  "role": "User"
+}
+
 ###
 
