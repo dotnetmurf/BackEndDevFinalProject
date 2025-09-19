@@ -1,0 +1,97 @@
+# .gitignore for Blazor (ASP.NET Core) project
+
+# Build results
+bin/
+obj/
+out/
+publish/
+TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# ASP.NET Core secrets
+secrets.json
+
+# NuGet packages
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+*.nuspec
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Rider IDE
+.idea/
+
+# Visual Studio Code workspace
+*.code-workspace
+
+# Blazor specific
+wwwroot/dist/
+wwwroot/node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Others
+*.tmp
+*.bak
+*.swp
+*.lock
+
+# Additional entries added by GitHub Copilot for ASP.NET Core Web API projects.
+# IIS Express settings
+.vs/
+*.vspscc
+*.vssscc
+
+# User-specific files
+*.userprefs
+
+# Resharper and Rider
+_ReSharper*/
+*.DotSettings.user
+
+# Azure Pipelines
+.azure-pipelines.yml
+
+# Local test databases
+*.mdf
+*.ldf
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+
+# NCrunch
+*.ncrunch*
+*.nunit.*
+
+# SonarQube
+.sonar/
+
+# Entity Framework Migrations
+Migrations/
+
+# Docker files
+docker-compose.*
+Dockerfile*
+
+# End of file
