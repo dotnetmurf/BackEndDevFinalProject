@@ -7,6 +7,8 @@ var app = builder.Build();
 
 // In-memory user store
 var users = new ConcurrentDictionary<int, User>();
+// Email to userId mapping for fast duplicate checks
+var emailToId = new ConcurrentDictionary<string, int>();
 var nextId = 1;
 
 // Seed with 10 test users
@@ -20,6 +22,7 @@ for (int i = 1; i <= 10; i++)
 		Role = i % 2 == 0 ? "Admin" : "User"
 	};
 	users.TryAdd(i, user);
+	emailToId.TryAdd(user.Email.ToLowerInvariant(), i);
 	nextId = i + 1;
 }
 
@@ -80,14 +83,18 @@ app.MapPost("/users", (User user) =>
 	{
 		return Results.BadRequest("Role must be either 'Admin' or 'User'.");
 	}
-	// Duplicate email check
-	if (users.Values.Any(u => u.Email.Equals(user.Email, StringComparison.OrdinalIgnoreCase)))
+	var emailKey = user.Email.ToLowerInvariant();
+	var id = nextId;
+	if (!emailToId.TryAdd(emailKey, id))
 	{
 		return Results.BadRequest("A user with this email already exists.");
 	}
-	var id = nextId++;
 	if (!users.TryAdd(id, user))
+	{
+		emailToId.TryRemove(emailKey, out _); // rollback
 		return Results.Problem("Could not add user.");
+	}
+	nextId++;
 	return Results.Created($"/users/{id}", new { Id = id, User = user });
 });
 
@@ -118,13 +125,20 @@ app.MapPut("/users/{id:int}", (int id, User updatedUser) =>
 	{
 		return Results.BadRequest("Role must be either 'Admin' or 'User'.");
 	}
-	// Duplicate email check (exclude current user)
-	if (users.Any(kvp => kvp.Key != id && kvp.Value.Email.Equals(updatedUser.Email, StringComparison.OrdinalIgnoreCase)))
-	{
-		return Results.BadRequest("A user with this email already exists.");
-	}
 	if (!users.ContainsKey(id))
 		return Results.NotFound();
+
+	var emailKey = updatedUser.Email.ToLowerInvariant();
+	var currentEmailKey = users[id].Email.ToLowerInvariant();
+	if (!emailKey.Equals(currentEmailKey, StringComparison.OrdinalIgnoreCase))
+	{
+		// Email is being changed, check for duplicates and update mapping
+		if (!emailToId.TryAdd(emailKey, id))
+		{
+			return Results.BadRequest("A user with this email already exists.");
+		}
+		emailToId.TryRemove(currentEmailKey, out _);
+	}
 	users[id] = updatedUser;
 	return Results.Ok(new { Id = id, User = updatedUser });
 });
@@ -132,8 +146,12 @@ app.MapPut("/users/{id:int}", (int id, User updatedUser) =>
 // Delete user
 app.MapDelete("/users/{id:int}", (int id) =>
 {
-	if (users.TryRemove(id, out _))
+	if (users.TryRemove(id, out var removedUser))
+	{
+		var emailKey = removedUser.Email.ToLowerInvariant();
+		emailToId.TryRemove(emailKey, out _);
 		return Results.NoContent();
+	}
 	return Results.NotFound();
 });
 
