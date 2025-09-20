@@ -101,7 +101,6 @@ Content-Type: application/json
   "role": "Guest"
 }
 
-
 ###
 # Update a user with an invalid role to test validation
 PUT {{baseUrl}}/users/3
@@ -112,6 +111,72 @@ Content-Type: application/json
   "lastName": "Johnson",
   "email": "alice.johnson@example.com",
   "role": "PowerUser"
+}
+
+###
+# Get all users
+GET {{baseUrl}}/users
+
+###
+
+# Create a new user with invalid string lengths to test validation
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "alice.smith@example.com",
+  "role": "Guest"
+}
+
+###
+# Get all users
+GET {{baseUrl}}/users
+
+###
+# Update a user with invalid string lengths to test validation
+PUT {{baseUrl}}/users/3
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "email": "alice.johnson@example.com",
+  "role": "PowerUser"
+}
+
+###
+# Get all users
+GET {{baseUrl}}/users
+
+###
+
+# Create a new user with duplicate email to test validation
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "test1@example.com",
+  "role": "Admin"
+}
+
+###
+# Get all users
+GET {{baseUrl}}/users
+
+###
+# Update a user with duplicate email to test validation
+PUT {{baseUrl}}/users/3
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "email": "test7@example.com",
+  "role": "User"
 }
 
 ###
