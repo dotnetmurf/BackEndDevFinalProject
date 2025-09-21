@@ -56,91 +56,100 @@ static bool IsValidEmail(string email)
 	}
 }
 
+// Duplicate email check helper
+static bool DuplicateEmail(string email, ConcurrentDictionary<string, int> emailToId, int? currentUserId = null)
+{
+    var emailKey = email.ToLowerInvariant();
+    if (emailToId.TryGetValue(emailKey, out var existingId))
+    {
+        // If currentUserId is provided (PUT), allow if the email belongs to the same user
+        if (currentUserId == null || existingId != currentUserId)
+            return true;
+    }
+    return false;
+}
+
+// User data validation helper
+static IResult? ValidateUserData(User user)
+{
+    if (string.IsNullOrWhiteSpace(user.FirstName) ||
+        string.IsNullOrWhiteSpace(user.LastName) ||
+        string.IsNullOrWhiteSpace(user.Email) ||
+        string.IsNullOrWhiteSpace(user.Role))
+    {
+        return Results.BadRequest("All fields are required and cannot be empty.");
+    }
+    if (user.FirstName.Length > 50)
+        return Results.BadRequest("FirstName cannot exceed 50 characters.");
+    if (user.LastName.Length > 50)
+        return Results.BadRequest("LastName cannot exceed 50 characters.");
+    if (user.Email.Length > 75)
+        return Results.BadRequest("Email cannot exceed 75 characters.");
+    if (user.Role.Length > 10)
+        return Results.BadRequest("Role cannot exceed 10 characters.");
+    if (!IsValidEmail(user.Email))
+    {
+        return Results.BadRequest("Email is not in a valid format.");
+    }
+    if (!string.Equals(user.Role, "Admin", StringComparison.OrdinalIgnoreCase) &&
+        !string.Equals(user.Role, "User", StringComparison.OrdinalIgnoreCase))
+    {
+        return Results.BadRequest("Role must be either 'Admin' or 'User'.");
+    }
+    return null;
+}
+
 // Create user
 app.MapPost("/users", (User user) =>
 {
-	if (string.IsNullOrWhiteSpace(user.FirstName) ||
-		string.IsNullOrWhiteSpace(user.LastName) ||
-		string.IsNullOrWhiteSpace(user.Email) ||
-		string.IsNullOrWhiteSpace(user.Role))
-	{
-		return Results.BadRequest("All fields are required and cannot be empty.");
-	}
-	if (user.FirstName.Length > 50)
-		return Results.BadRequest("FirstName cannot exceed 50 characters.");
-	if (user.LastName.Length > 50)
-		return Results.BadRequest("LastName cannot exceed 50 characters.");
-	if (user.Email.Length > 75)
-		return Results.BadRequest("Email cannot exceed 75 characters.");
-	if (user.Role.Length > 10)
-		return Results.BadRequest("Role cannot exceed 10 characters.");
-	if (!IsValidEmail(user.Email))
-	{
-		return Results.BadRequest("Email is not in a valid format.");
-	}
-	if (!string.Equals(user.Role, "Admin", StringComparison.OrdinalIgnoreCase) &&
-		!string.Equals(user.Role, "User", StringComparison.OrdinalIgnoreCase))
-	{
-		return Results.BadRequest("Role must be either 'Admin' or 'User'.");
-	}
-	var emailKey = user.Email.ToLowerInvariant();
-	var id = nextId;
-	if (!emailToId.TryAdd(emailKey, id))
-	{
-		return Results.BadRequest("A user with this email already exists.");
-	}
-	if (!users.TryAdd(id, user))
-	{
-		emailToId.TryRemove(emailKey, out _); // rollback
-		return Results.Problem("Could not add user.");
-	}
-	nextId++;
-	return Results.Created($"/users/{id}", new { Id = id, User = user });
+    var validationResult = ValidateUserData(user);
+    if (validationResult != null)
+        return validationResult;
+
+    if (DuplicateEmail(user.Email, emailToId))
+    {
+        return Results.BadRequest("A user with this email already exists.");
+    }
+
+    var emailKey = user.Email.ToLowerInvariant();
+    var id = nextId;
+    emailToId.TryAdd(emailKey, id);
+    if (!users.TryAdd(id, user))
+    {
+        emailToId.TryRemove(emailKey, out _); // rollback
+        return Results.Problem("Could not add user.");
+    }
+    nextId++;
+    return Results.Created($"/users/{id}", new { Id = id, User = user });
 });
 
 // Update user
 app.MapPut("/users/{id:int}", (int id, User updatedUser) =>
 {
-	if (string.IsNullOrWhiteSpace(updatedUser.FirstName) ||
-		string.IsNullOrWhiteSpace(updatedUser.LastName) ||
-		string.IsNullOrWhiteSpace(updatedUser.Email) ||
-		string.IsNullOrWhiteSpace(updatedUser.Role))
-	{
-		return Results.BadRequest("All fields are required and cannot be empty.");
-	}
-	if (updatedUser.FirstName.Length > 50)
-		return Results.BadRequest("FirstName cannot exceed 50 characters.");
-	if (updatedUser.LastName.Length > 50)
-		return Results.BadRequest("LastName cannot exceed 50 characters.");
-	if (updatedUser.Email.Length > 75)
-		return Results.BadRequest("Email cannot exceed 75 characters.");
-	if (updatedUser.Role.Length > 10)
-		return Results.BadRequest("Role cannot exceed 10 characters.");
-	if (!IsValidEmail(updatedUser.Email))
-	{
-		return Results.BadRequest("Email is not in a valid format.");
-	}
-	if (!string.Equals(updatedUser.Role, "Admin", StringComparison.OrdinalIgnoreCase) &&
-		!string.Equals(updatedUser.Role, "User", StringComparison.OrdinalIgnoreCase))
-	{
-		return Results.BadRequest("Role must be either 'Admin' or 'User'.");
-	}
-	if (!users.ContainsKey(id))
-		return Results.NotFound();
+    var validationResult = ValidateUserData(updatedUser);
+    if (validationResult != null)
+        return validationResult;
 
-	var emailKey = updatedUser.Email.ToLowerInvariant();
-	var currentEmailKey = users[id].Email.ToLowerInvariant();
-	if (!emailKey.Equals(currentEmailKey, StringComparison.OrdinalIgnoreCase))
-	{
-		// Email is being changed, check for duplicates and update mapping
-		if (!emailToId.TryAdd(emailKey, id))
-		{
-			return Results.BadRequest("A user with this email already exists.");
-		}
-		emailToId.TryRemove(currentEmailKey, out _);
-	}
-	users[id] = updatedUser;
-	return Results.Ok(new { Id = id, User = updatedUser });
+    if (!users.ContainsKey(id))
+        return Results.NotFound();
+
+    var emailKey = updatedUser.Email.ToLowerInvariant();
+    var currentEmailKey = users[id].Email.ToLowerInvariant();
+    if (!emailKey.Equals(currentEmailKey, StringComparison.OrdinalIgnoreCase))
+    {
+        // Email is being changed, check for duplicates and update mapping
+        if (DuplicateEmail(updatedUser.Email, emailToId, id))
+        {
+            return Results.BadRequest("A user with this email already exists.");
+        }
+        if (!emailToId.TryAdd(emailKey, id))
+        {
+            return Results.BadRequest("A user with this email already exists.");
+        }
+        emailToId.TryRemove(currentEmailKey, out _);
+    }
+    users[id] = updatedUser;
+    return Results.Ok(new { Id = id, User = updatedUser });
 });
 
 // Delete user

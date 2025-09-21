@@ -127,7 +127,7 @@ Content-Type: application/json
   "firstName": "Alice",
   "lastName": "Smith",
   "email": "alice.smith@example.com",
-  "role": "Guest"
+  "role": "Admin"
 }
 
 ###
@@ -143,7 +143,7 @@ Content-Type: application/json
   "firstName": "Alice",
   "lastName": "Johnson",
   "email": "alice.johnson@example.com",
-  "role": "PowerUser"
+  "role": "User"
 }
 
 ###
