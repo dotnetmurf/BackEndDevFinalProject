@@ -138,10 +138,13 @@ app.MapPut("/users/{id:int}", (int id, User updatedUser) =>
     if (!emailKey.Equals(currentEmailKey, StringComparison.OrdinalIgnoreCase))
     {
         // Email is being changed, check for duplicates and update mapping
+        // First, check for a duplicate email in a thread-safe way using our helper (logic-level check)
         if (DuplicateEmail(updatedUser.Email, emailToId, id))
         {
             return Results.BadRequest("A user with this email already exists.");
         }
+        // Second, attempt to add the new email to the dictionary (atomic operation)
+        // This is a defensive check in case another thread added the same email between our check and this point
         if (!emailToId.TryAdd(emailKey, id))
         {
             return Results.BadRequest("A user with this email already exists.");
