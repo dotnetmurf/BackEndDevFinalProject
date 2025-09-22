@@ -29,6 +29,23 @@ for (int i = 1; i <= 10; i++)
 
 // CRUD Endpoints
 
+// Display initial user message
+app.MapGet("/", () =>
+    Results.Content(
+        @"<html>
+            <head>
+                <title>Welcome Page</title>
+            </head>
+            <body>
+                <h1>Welcome to the Minimal API!</h1>
+                <p>This is a multi-line HTML response.</p>
+                <ul>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                </ul>
+            </body>
+        </html>", "text/html")
+);
 
 // Get all users
 app.MapGet("/users", () => Results.Ok(
