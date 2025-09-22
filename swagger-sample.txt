@@ -1,0 +1,127 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basic Web API V1"));
+}
+
+var items = new List<Item>
+{
+    new Item { Id = 1, Name = "Item1", Price = 9.99 },
+    new Item { Id = 2, Name = "Item2", Price = 19.99 },
+    new Item { Id = 3, Name = "Item3", Price = 29.99 }
+};
+
+app.MapGet("/items", () =>
+{
+    return items is not null ? Results.Ok(items) : Results.NotFound();
+})
+.Produces<List<Item>>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi(operation => 
+{
+    operation.Summary = "Get all items";
+    operation.Description = "Returns a list of all items. If no items are found, returns a 404 Not Found response.";
+    operation.Responses["200"].Description = "A list of items is returned successfully";
+    operation.Responses["404"].Description = "No items found";
+    return operation;
+});
+
+app.MapGet("/items/{id}", (int id) =>
+{
+    var item = items.FirstOrDefault(i => i.Id == id);
+    return item is not null ? Results.Ok(item) : Results.NotFound();
+})
+.Produces<Item>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi(operation => 
+{
+    operation.Summary = "Get an item by its ID";
+    operation.Description = "Returns a single item if found, otherwise returns a 404 Not Found response.";
+    operation.Parameters[0].Description = "The ID of the item to retrieve";
+    operation.Responses["200"].Description = "Item found and returned successfully";
+    operation.Responses["404"].Description = "Item with specified ID not found";
+    return operation;
+});
+
+app.MapPost("/items", (Item newItem) =>
+{
+    // newItem.Id = items.Count + 1;
+    items.Add(newItem);
+    return Results.Created($"/items/{newItem.Id}", newItem);
+})
+.Produces<Item>(StatusCodes.Status201Created)
+.WithOpenApi(operation => 
+{
+    operation.Summary = "Create a new item";
+    operation.Description = "Creates a new item and returns the created item with a 201 Created response.";
+    operation.RequestBody.Description = "The item to create";
+    operation.Responses["201"].Description = "Item created successfully";
+    return operation;
+});
+
+app.MapPut("/items/{id}", (int id, Item updatedItem) =>
+{
+    var item = items.FirstOrDefault(i => i.Id == id);
+    if (item is null) return Results.NotFound();
+
+    item.Name = updatedItem.Name;
+    item.Price = updatedItem.Price;
+    return Results.NoContent();
+})
+.Produces(StatusCodes.Status204NoContent)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi(operation => 
+{
+    operation.Summary = "Update an existing item";
+    operation.Description = "Updates an existing item by its ID. Returns 204 No Content on success or 404 Not Found if the item does not exist.";
+    operation.Parameters[0].Description = "The ID of the item to update";
+    operation.RequestBody.Description = "The updated item data";
+    operation.Responses["204"].Description = "Item updated successfully";
+    operation.Responses["404"].Description = "Item with specified ID not found";
+    return operation;
+});
+
+app.MapDelete("/items/{id}", (int id) =>
+{
+    var item = items.FirstOrDefault(i => i.Id == id);
+    if (item is null) return Results.NotFound();
+
+    items.Remove(item);
+    return Results.NoContent();
+})
+.Produces(StatusCodes.Status204NoContent)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi(operation => 
+{
+    operation.Summary = "Delete an item by its ID";
+    operation.Description = "Deletes an existing item by its ID. Returns 204 No Content on success or 404 Not Found if the item does not exist.";
+    operation.Parameters[0].Description = "The ID of the item to delete";
+    operation.Responses["204"].Description = "Item deleted successfully";
+    operation.Responses["404"].Description = "Item with specified ID not found";
+    return operation;
+});
+
+// Basic routes
+app.MapGet("/", () => "Welcome to the Simple Web API!").ExcludeFromDescription();
+
+app.Run();
+
+
+
+public class Item
+{
+    required public int Id { get; set; }
+    required public  string Name { get; set; }
+    required public double Price { get; set; }
+}
+
