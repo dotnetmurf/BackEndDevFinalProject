@@ -1,5 +1,6 @@
 
 using System.Collections.Concurrent;
+using Microsoft.AspNetCore.Authorization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,10 @@ var app = builder.Build();
 
 // Register custom middleware in the correct order
 app.UseMiddleware<ErrorHandlingMiddleware>();
+
+app.UseDefaultFiles(); // Looks for index.html by default in wwwroot
+app.UseStaticFiles();  // Serves static files from wwwroot
+
 app.UseMiddleware<AuthenticationMiddleware>();
 app.UseMiddleware<LoggingMiddleware>();
 
@@ -32,26 +37,7 @@ for (int i = 1; i <= 10; i++)
 	nextId = i + 1;
 }
 
-
 // CRUD Endpoints
-
-// Display initial user message
-app.MapGet("/", () =>
-    Results.Content(
-        @"<html>
-            <head>
-                <title>Welcome Page</title>
-            </head>
-            <body>
-                <h1>Welcome to the Minimal API!</h1>
-                <p>This is a multi-line HTML response.</p>
-                <ul>
-                    <li>Item 1</li>
-                    <li>Item 2</li>
-                </ul>
-            </body>
-        </html>", "text/html")
-);
 
 // Get all users
 app.MapGet("/users", () => Results.Ok(
