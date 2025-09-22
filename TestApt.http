@@ -1,0 +1,58 @@
+### Test: Get all users (valid token)
+GET http://localhost:5000/users
+Authorization: Bearer your-secret-token
+
+### Test: Get all users (invalid token)
+GET http://localhost:5000/users
+Authorization: Bearer invalid-token
+
+### Test: Get all users (missing token)
+GET http://localhost:5000/users
+
+### Test: Get user by ID (valid token)
+GET http://localhost:5000/users/1
+Authorization: Bearer your-secret-token
+
+### Test: Create user (valid token)
+POST http://localhost:5000/users
+Authorization: Bearer your-secret-token
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "janedoe@example.com",
+  "role": "User"
+}
+
+### Test: Create user (invalid token)
+POST http://localhost:5000/users
+Authorization: Bearer invalid-token
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "janedoe@example.com",
+  "role": "User"
+}
+
+### Test: Trigger error (invalid endpoint)
+GET http://localhost:5000/invalid-endpoint
+Authorization: Bearer your-secret-token
+
+### Test: Update user (valid token)
+PUT http://localhost:5000/users/1
+Authorization: Bearer your-secret-token
+Content-Type: application/json
+
+{
+  "firstName": "Updated",
+  "lastName": "User",
+  "email": "updateduser@example.com",
+  "role": "Admin"
+}
+
+### Test: Delete user (valid token)
+DELETE http://localhost:5000/users/1
+Authorization: Bearer your-secret-token

@@ -1,8 +1,14 @@
 
 using System.Collections.Concurrent;
 
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+
+// Register custom middleware in the correct order
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<AuthenticationMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
 
 
 // In-memory user store
