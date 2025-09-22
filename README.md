@@ -80,7 +80,7 @@ To send the Authorization token "your-secret-token" in Postman, follow these ste
 
 ### Testing with REST Client
 
-If testing is done in Visual Studio Code and the REST Client extension is installed, the API can be tested with the following test files located within the project:
+If testing is done in Visual Studio Code with the REST Client extension installed, the API can be tested with the following test files located within the project:
 
 - TestApi.http
 - UserApi.http
