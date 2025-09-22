@@ -4,8 +4,8 @@
 
 # Create a new user
 POST {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Smith",
@@ -16,16 +16,18 @@ Content-Type: application/json
 ###
 # Get all users
 GET {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 
 ###
 # Get a user by ID (replace with actual ID from create response)
 GET {{baseUrl}}/users/2
+Authorization: Bearer your-secret-token
 
 ###
 # Update a user (replace with actual ID)
 PUT {{baseUrl}}/users/3
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Johnson",
@@ -36,12 +38,13 @@ Content-Type: application/json
 ###
 # Delete a user (replace with actual ID)
 DELETE {{baseUrl}}/users/5
+Authorization: Bearer your-secret-token
 
 ###
 # Create a new user with an empty first name to test validation
 POST {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "",
   "lastName": "Smith",
@@ -49,12 +52,11 @@ Content-Type: application/json
   "role": "Admin"
 }
 
-
 ###
 # Update a user with an empty last name to test validation
 PUT {{baseUrl}}/users/3
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "",
@@ -62,12 +64,11 @@ Content-Type: application/json
   "role": "User"
 }
 
-
 ###
 # Create a new user with an invalid email format to test validation
 POST {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Smith",
@@ -75,12 +76,11 @@ Content-Type: application/json
   "role": "Admin"
 }
 
-
 ###
 # Update a user with an invalid email format to test validation
 PUT {{baseUrl}}/users/3
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Johnson",
@@ -92,8 +92,8 @@ Content-Type: application/json
 
 # Create a new user with an invalid role to test validation
 POST {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Smith",
@@ -104,8 +104,8 @@ Content-Type: application/json
 ###
 # Update a user with an invalid role to test validation
 PUT {{baseUrl}}/users/3
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Johnson",
@@ -116,13 +116,14 @@ Content-Type: application/json
 ###
 # Get all users
 GET {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 
 ###
 
 # Create a new user with invalid string lengths to test validation
 POST {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Smith",
@@ -133,12 +134,13 @@ Content-Type: application/json
 ###
 # Get all users
 GET {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 
 ###
 # Update a user with invalid string lengths to test validation
 PUT {{baseUrl}}/users/3
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Johnson",
@@ -149,13 +151,14 @@ Content-Type: application/json
 ###
 # Get all users
 GET {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 
 ###
 
 # Create a new user with duplicate email to test validation
 POST {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Smith",
@@ -166,12 +169,13 @@ Content-Type: application/json
 ###
 # Get all users
 GET {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 
 ###
 # Update a user with duplicate email to test validation
 PUT {{baseUrl}}/users/3
+Authorization: Bearer your-secret-token
 Content-Type: application/json
-
 {
   "firstName": "Alice",
   "lastName": "Johnson",
@@ -182,6 +186,7 @@ Content-Type: application/json
 ###
 # Get all users
 GET {{baseUrl}}/users
+Authorization: Bearer your-secret-token
 
 ###
 

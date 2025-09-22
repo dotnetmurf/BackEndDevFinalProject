@@ -62,3 +62,7 @@ Content-Type: application/json
 ### Test: Delete user (valid token)
 DELETE {{baseUrl}}/users/1
 Authorization: Bearer your-secret-token
+
+### Test: Delete user (invalid token)
+DELETE {{baseUrl}}/users/3
+Authorization: Bearer invalid-token
