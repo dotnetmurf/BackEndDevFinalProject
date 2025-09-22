@@ -1,20 +1,26 @@
+### Test User Management API for error handling, authentication, and logging middleware.
+
+@baseUrl = http://localhost:5164
+
+
+
 ### Test: Get all users (valid token)
-GET http://localhost:5000/users
+GET {{baseUrl}}/users
 Authorization: Bearer your-secret-token
 
 ### Test: Get all users (invalid token)
-GET http://localhost:5000/users
+GET {{baseUrl}}/users
 Authorization: Bearer invalid-token
 
 ### Test: Get all users (missing token)
-GET http://localhost:5000/users
+GET {{baseUrl}}/users
 
 ### Test: Get user by ID (valid token)
-GET http://localhost:5000/users/1
+GET {{baseUrl}}/users/1
 Authorization: Bearer your-secret-token
 
 ### Test: Create user (valid token)
-POST http://localhost:5000/users
+POST {{baseUrl}}/users
 Authorization: Bearer your-secret-token
 Content-Type: application/json
 
@@ -26,7 +32,7 @@ Content-Type: application/json
 }
 
 ### Test: Create user (invalid token)
-POST http://localhost:5000/users
+POST {{baseUrl}}/users
 Authorization: Bearer invalid-token
 Content-Type: application/json
 
@@ -38,11 +44,11 @@ Content-Type: application/json
 }
 
 ### Test: Trigger error (invalid endpoint)
-GET http://localhost:5000/invalid-endpoint
+GET {{baseUrl}}/invalid-endpoint
 Authorization: Bearer your-secret-token
 
 ### Test: Update user (valid token)
-PUT http://localhost:5000/users/1
+PUT {{baseUrl}}/users/1
 Authorization: Bearer your-secret-token
 Content-Type: application/json
 
@@ -54,5 +60,5 @@ Content-Type: application/json
 }
 
 ### Test: Delete user (valid token)
-DELETE http://localhost:5000/users/1
+DELETE {{baseUrl}}/users/1
 Authorization: Bearer your-secret-token
