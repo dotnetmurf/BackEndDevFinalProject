@@ -86,6 +86,8 @@ This project was developed as part of a back-end development course, with activi
 - Debugging and validating code with Copilot
 - Implementing and managing middleware with Copilot
 
+Regarding how Copilot was used in this project's development process, transcriptions of the prompts that were used and the conversations that occurred were captured and saved in text files. These files can be found in the `/wwwroot/docs` folder in the project.
+
 ## License
 This project is for educational purposes.
 
