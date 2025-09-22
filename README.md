@@ -74,11 +74,18 @@ To send the Authorization token "your-secret-token" in Postman, follow these ste
 2. Set the method to GET (or whatever your endpoint expects).
 3. Paste the URL.
 4. Go to the Authorization tab.
-   4.a. Type: Bearer Token
-   4.b. Token: your-secret-token
+   - a. Type: Bearer Token
+   - b. Token: your-secret-token
 5. Send the request and inspect the response.
 
-- The API includes validation and robust error handling for edge cases.
+### Testing with REST Client
+
+If testing is done in Visual Studio Code and the REST Client extension is installed, the API can be tested with the following test files located within the project:
+
+- TestApi.http
+- UserApi.http
+
+The API includes validation and robust error handling for edge cases.
 
 ## Educational Context
 This project was developed as part of a back-end development course, with activities focused on:
