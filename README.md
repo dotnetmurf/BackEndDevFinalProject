@@ -1,7 +1,11 @@
-# BackEndDevFinalProject: User Management API
+# BackEndDevFinalProject: TechHive Solutions User Management API
+
+The deployed version of the TechHive API can be viewed <a href="https://dev.dotnetmurf.net/BlazorFinalProject/" target="_blank">here</a>.
+
+Note: This course is one of twelve courses required for obtaining the <a href="https://www.coursera.org/professional-certificates/microsoft-full-stack-developer" target="_blank">"Microsoft Full-Stack Developer Professional Certificate"</a>.
 
 ## Project Overview
-This project is a User Management API built with ASP.NET Core Minimal API for TechHive Solutions. It allows HR and IT departments to efficiently create, update, retrieve, and delete user records. The API was developed as a final project for a back-end development course, with a focus on leveraging Microsoft Copilot for code generation, enhancement, and debugging.
+This project is a User Management API built with ASP.NET Core Minimal API for TechHive Solutions. It allows HR and IT departments to efficiently create, update, retrieve, and delete user records. The API was developed as a three-part final project for the <a href="https://www.coursera.org/learn/back-end-development-with-dotnet?specialization=microsoft-full-stack-developer" target="_blank">"Back-End Development with .NET"</a>, with a focus on leveraging Microsoft Copilot for code generation, enhancement, and debugging.
 
 ## Features
 - CRUD operations for user management (GET, POST, PUT, DELETE)
@@ -97,5 +101,9 @@ Regarding how Copilot was used in this project's development process, transcript
 
 ## License
 This project is licensed under the GNU General Public License.
+
+## Contact
+
+For questions about this educational project, please refer to the course materials or contact the instructor at <a href="https://www.coursera.org/learn/back-end-development-with-dotnet?specialization=microsoft-full-stack-developer" target="_blank">"Back-End Development with .NET"</a>
 
 ---
