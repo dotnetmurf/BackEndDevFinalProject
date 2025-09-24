@@ -40,12 +40,17 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Enable Swagger/OpenAPI middleware for demonstration application
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Enable Swagger/OpenAPI middleware for production application
 // Enable Swagger/OpenAPI middleware in Development
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
 
 // Register custom middleware in the correct order
 app.UseMiddleware<ErrorHandlingMiddleware>();

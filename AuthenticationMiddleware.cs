@@ -20,6 +20,13 @@ public class AuthenticationMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
+        // Allow unauthenticated access to /favicon.ico
+        if (context.Request.Path.Equals("/favicon.ico", StringComparison.OrdinalIgnoreCase))
+        {
+            await _next(context);
+            return;
+        }
+
         if (!context.Request.Headers.TryGetValue(AUTH_HEADER, out var authHeader) ||
             !authHeader.ToString().StartsWith(BEARER_PREFIX) ||
             authHeader.ToString().Substring(BEARER_PREFIX.Length) != VALID_TOKEN)
