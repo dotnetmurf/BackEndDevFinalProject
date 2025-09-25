@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BackEndDevFinalProject: TechHive Solutions User Management API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>TechHive Solutions User Management API</h1>
+    <p>
+      This project is a User Management API built with ASP.NET Core Minimal API for TechHive Solutions. It enables HR
+      and IT departments to create, update, retrieve, and delete user records efficiently.
+    </p>
+    <p>
+      This API was developed as a three-part final project for
+      the
+      The API was developed as a three-part final project for the <a href="https://www.coursera.org/learn/back-end-development-with-dotnet?specialization=microsoft-full-stack-developer" target="_blank">"Back-End Development with .NET"</a>
+      course with a focus on leveraging Microsoft Copilot for code generation, enhancement, and debugging. The project requirements can be viewed <a
+        href="docs/project-requirements.txt" target="_blank">here</a>.
+    </p>
+    <p>The GitHub repository for this project can be found <a href="https://github.com/dotnetmurf/BackEndDevFinalProject"
+        target="_blank">here</a>.</p>
+
+    <h2>Key Features</h2>
+    <ul>
+      <li>CRUD operations for user management</li>
+      <li>In-memory user store with test users</li>
+      <li>Input validation and robust error handling</li>
+      <li>Custom middleware: error handling, authentication, logging</li>
+      <li>Swagger/OpenAPI documentation</li>
+      <li>JWT Bearer token authentication</li>
+    </ul>
+    <h2>Quick Start</h2>
+    <ol>
+      <li>Install .NET 9 SDK</li>
+      <li>Clone the repository</li>
+      <li>Run <code>dotnet restore</code> and <code>dotnet build</code></li>
+      <li>Start the API with <code>dotnet run</code></li>
+      <li>Access Swagger UI at <code>/swagger</code></li>
+    </ol>
+        <footer class="app-footer">
+            <!-- <img src="images/white-clear-icon-32.png" alt="EventEase Logo" class="logo" /> -->
+            © @DateTime.Now.Year TechHive Solutions LLC — All rights reserved.
+        </footer>
+  </div>
+</body>
+
+</html>
