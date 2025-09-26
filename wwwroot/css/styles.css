@@ -1,3 +1,18 @@
+/*
+    styles.css - TechHive Solutions User Management API Web UI
+    ---------------------------------------------------------
+    This file contains the global and component styles for the User Management API web interface.
+
+    Main Features:
+    - Provides consistent layout, colors, and typography for the application.
+    - Styles header banner, footer, containers, buttons, and lists for clarity and branding.
+    - Uses a modern, responsive design for accessibility and usability.
+    - Supports company branding with custom colors and logo placement.
+    - Enhances user experience for HR and IT users interacting with the API UI.
+
+    This stylesheet is loaded by index.html and applies to all pages served from wwwroot.
+*/
+
 /* Global Styles */
 body {
     margin: 2rem;
@@ -29,19 +44,6 @@ body {
     text-align: center;
 }
 
-
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    max-width: 1200px;
-    width: 100%;
-    padding: 0 20px;
-    text-align: center;
-}
-
 .logo {
     height: 80px;
     width: auto;
@@ -54,6 +56,18 @@ body {
     font-size: 2rem;
     font-weight: 600;
     margin: 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 20px;
+    text-align: center;
 }
 
 .footer-text {
