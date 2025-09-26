@@ -1,3 +1,23 @@
+/*
+    Program.cs - TechHive Solutions User Management API
+    ---------------------------------------------------
+    This file contains the ASP.NET Core Minimal API entry point for the User Management system.
+
+    Main Features:
+    - Configures Swagger/OpenAPI documentation and JWT Bearer authentication for API testing and security.
+    - Registers custom middleware for error handling, authentication, and logging.
+    - Initializes an in-memory user store with seeded test users and fast email lookup.
+    - Implements RESTful CRUD endpoints for user management:
+        - GET /users: List all users
+        - GET /users/{id}: Retrieve user by ID
+        - POST /users: Create a new user (with validation and duplicate email checks)
+        - PUT /users/{id}: Update an existing user (with validation and duplicate email checks)
+        - DELETE /users/{id}: Delete a user by ID
+    - Provides a POST /users/reset endpoint to reset the user store to its initial seeded state.
+    - Serves static files and the main web UI from wwwroot/index.html.
+
+    This file uses top-level statements and is structured for clarity and maintainability.
+*/
 using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OpenApi;
@@ -61,14 +81,11 @@ app.UseStaticFiles();  // Serves static files from wwwroot
 app.UseMiddleware<AuthenticationMiddleware>();
 app.UseMiddleware<LoggingMiddleware>();
 
-// In-memory user store
-var users = new ConcurrentDictionary<int, User>();
-// Email to userId mapping for fast duplicate checks
-var emailToId = new ConcurrentDictionary<string, int>();
-var nextId = 1;
-
-// Seed users dictionary with 50 test users
-nextId = UserSeeder.SeedUsers(users, emailToId, startId: 1, count: 50);
+// In-memory user store and email mapping
+var result = UserSeeder.CreateUserStore(startId: 1, count: 50);
+ConcurrentDictionary<int, User> users = result.users;
+ConcurrentDictionary<string, int> emailToId = result.emailToId;
+int nextId = result.nextId;
 
 // CRUD Endpoints
 
@@ -206,6 +223,28 @@ app.MapDelete("/users/{id:int}", (int id) =>
         operation.Parameters[0].Description = "The ID of the user to delete.";
         operation.Responses["204"].Description = "User deleted successfully.";
         operation.Responses["404"].Description = "User with specified ID not found.";
+        return operation;
+    });
+
+// Reset user store endpoint
+app.MapPost("/users/reset", () =>
+{
+    var resetResult = UserSeeder.CreateUserStore(startId: 1, count: 50);
+    users.Clear();
+    emailToId.Clear();
+    foreach (var kvp in resetResult.users)
+        users.TryAdd(kvp.Key, kvp.Value);
+    foreach (var kvp in resetResult.emailToId)
+        emailToId.TryAdd(kvp.Key, kvp.Value);
+    nextId = resetResult.nextId;
+    return Results.Ok(new { Message = "User store reset successfully.", Count = users.Count });
+})
+    .Produces<object>(StatusCodes.Status200OK)
+    .WithOpenApi(operation =>
+    {
+        operation.Summary = "Reset the user store";
+        operation.Description = "Resets the in-memory user dictionary to its initial seeded state.";
+        operation.Responses["200"].Description = "User store reset successfully.";
         return operation;
     });
 

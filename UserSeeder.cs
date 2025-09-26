@@ -2,6 +2,13 @@ using System.Collections.Concurrent;
 
 public static class UserSeeder
 {
+    public static (ConcurrentDictionary<int, User> users, ConcurrentDictionary<string, int> emailToId, int nextId) CreateUserStore(int startId = 1, int count = 50)
+    {
+        var users = new ConcurrentDictionary<int, User>();
+        var emailToId = new ConcurrentDictionary<string, int>();
+        var nextId = SeedUsers(users, emailToId, startId, count);
+        return (users, emailToId, nextId);
+    }
     public static int SeedUsers(ConcurrentDictionary<int, User> users, ConcurrentDictionary<string, int> emailToId, int startId = 1, int count = 10)
     {
         int nextId = startId;
