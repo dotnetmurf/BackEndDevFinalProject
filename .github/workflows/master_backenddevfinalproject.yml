@@ -24,10 +24,10 @@ jobs:
           dotnet-version: '9.x'
 
       - name: Build with dotnet
-        run: dotnet build MinimalApi01/BackEndDevFinalProject/BackEndDevFinalProject.csproj --configuration Release
+        run: dotnet build BackEndDevFinalProject.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish MinimalApi01/BackEndDevFinalProject/BackEndDevFinalProject.csproj --configuration Release --output ./publish
+        run: dotnet publish BackEndDevFinalProject.csproj --configuration Release --output ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -64,3 +64,4 @@ jobs:
           package: .
 
           
+
