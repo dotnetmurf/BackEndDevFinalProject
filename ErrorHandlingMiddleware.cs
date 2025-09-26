@@ -1,3 +1,17 @@
+/*
+    ErrorHandlingMiddleware.cs - TechHive Solutions User Management API
+    ------------------------------------------------------------------
+    This file defines a custom ASP.NET Core middleware for global error handling.
+
+    Main Features:
+    - Catches unhandled exceptions thrown by downstream middleware or endpoints.
+    - Logs exception details for diagnostics and auditing.
+    - Returns a standardized 500 Internal Server Error response in JSON format.
+    - Prevents leaking sensitive exception details to clients.
+    - Improves API reliability and user experience by handling errors gracefully.
+
+    This middleware is registered in Program.cs and wraps all API requests for robust error management.
+*/
 using System;
 using System.Net;
 using System.Text.Json;

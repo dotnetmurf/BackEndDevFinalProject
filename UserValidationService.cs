@@ -1,3 +1,17 @@
+/*
+    UserValidationService.cs - TechHive Solutions User Management API
+    ---------------------------------------------------------------
+    This file defines static helper methods for validating user data and enforcing business rules.
+
+    Main Features:
+    - Validates user input for required fields, length limits, and allowed values.
+    - Checks for duplicate emails in the user store, supporting both create and update scenarios.
+    - Verifies email format using .NET's MailAddress class.
+    - Returns standardized error responses for invalid data.
+    - Used by Program.cs to ensure data integrity and prevent invalid or duplicate user records.
+
+    This class centralizes validation logic for consistent and maintainable user management.
+*/
 using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Http;
 

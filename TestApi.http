@@ -1,3 +1,17 @@
+###
+TestApi.http - TechHive Solutions User Management API
+-----------------------------------------------------
+This file contains HTTP request examples for testing the User Management API endpoints and middleware.
+
+Main Features:
+- Tests CRUD operations for users (GET, POST, PUT, DELETE).
+- Verifies error handling, authentication, and logging middleware behavior.
+- Includes requests with valid, invalid, and missing JWT Bearer tokens.
+- Demonstrates expected responses for success and failure scenarios.
+- Uses Visual Studio Code's REST Client extension or similar tools for interactive API testing.
+
+This file helps developers and testers validate API functionality and middleware logic quickly.
+###
 ### Test User Management API for error handling, authentication, and logging middleware.
 
 @baseUrl = http://localhost:5164

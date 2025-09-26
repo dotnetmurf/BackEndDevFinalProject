@@ -1,3 +1,16 @@
+/*
+    UserSeeder.cs - TechHive Solutions User Management API
+    -----------------------------------------------------
+    This file defines static helper methods for seeding and initializing the in-memory user store.
+
+    Main Features:
+    - Provides CreateUserStore to initialize user and email dictionaries with test users.
+    - Implements SeedUsers to populate the store with sample user data for development and testing.
+    - Supports fast duplicate email checks and user ID assignment.
+    - Used by Program.cs to set up the initial state of the API's user management system.
+
+    This class helps ensure consistent test data and efficient user store management.
+*/
 using System.Collections.Concurrent;
 
 public static class UserSeeder

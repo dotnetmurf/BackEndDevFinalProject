@@ -1,3 +1,17 @@
+/*
+    AuthenticationMiddleware.cs - TechHive Solutions User Management API
+    -------------------------------------------------------------------
+    This file defines a custom ASP.NET Core middleware for handling authentication.
+
+    Main Features:
+    - Intercepts incoming HTTP requests and checks for a valid JWT Bearer token in the Authorization header.
+    - Allows unauthenticated access to /favicon.ico for browser compatibility.
+    - Returns 401 Unauthorized and a JSON error response for requests with missing or invalid tokens.
+    - Logs unauthorized access attempts for auditing and debugging.
+    - Passes authenticated requests to the next middleware in the pipeline.
+
+    This middleware is registered in Program.cs and secures all API endpoints except those explicitly excluded.
+*/
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;

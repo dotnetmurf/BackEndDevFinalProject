@@ -1,3 +1,16 @@
+###
+UserApi.http - TechHive Solutions User Management API
+-----------------------------------------------------
+This file contains HTTP request examples for testing all CRUD endpoints of the User Management API.
+
+Main Features:
+- Demonstrates how to create, retrieve, update, and delete user records via API endpoints.
+- Uses JWT Bearer token authentication for secured requests.
+- Provides sample payloads and instructions for replacing IDs as needed.
+- Designed for use with VS Code REST Client extension or similar tools for interactive API testing.
+
+This file helps developers and testers validate the full user management workflow and API functionality.
+###
 ### Test all CRUD endpoints for User Management API
 
 @baseUrl = http://localhost:5164
