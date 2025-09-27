@@ -1,6 +1,6 @@
 # BackEndDevFinalProject: TechHive Solutions User Management API
 
-The deployed version of the TechHive API can be viewed <a href="https://dev.dotnetmurf.net/BlazorFinalProject/" target="_blank">here</a>.
+The deployed version of the TechHive API can be viewed <a href="https://dev.dotnetmurf.net/BackEndFinalProject/" target="_blank">here</a>.
 
 Note: This course is one of twelve courses required for obtaining the <a href="https://www.coursera.org/professional-certificates/microsoft-full-stack-developer" target="_blank">"Microsoft Full-Stack Developer Professional Certificate"</a>.
 
