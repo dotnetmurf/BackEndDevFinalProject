@@ -94,4 +94,7 @@ Migrations/
 docker-compose.*
 Dockerfile*
 
+# Application-specific folders
+aws-s3-redirect/
+
 # End of file
