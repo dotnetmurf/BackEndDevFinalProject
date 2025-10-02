@@ -2,10 +2,14 @@
 
 The deployed version of the TechHive API can be viewed <a href="https://dev.dotnetmurf.net/BackEndFinalProject/" target="_blank">here</a>.
 
-Note: This course is one of twelve courses required for obtaining the <a href="https://www.coursera.org/professional-certificates/microsoft-full-stack-developer" target="_blank">"Microsoft Full-Stack Developer Professional Certificate"</a>.
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4)](https://dotnet.microsoft.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 
 ## Project Overview
-This project is a User Management API built with ASP.NET Core Minimal API for TechHive Solutions. It allows HR and IT departments to efficiently create, update, retrieve, and delete user records. The API was developed as a three-part final project for the <a href="https://www.coursera.org/learn/back-end-development-with-dotnet?specialization=microsoft-full-stack-developer" target="_blank">"Back-End Development with .NET"</a>, with a focus on leveraging Microsoft Copilot for code generation, enhancement, and debugging.
+This project is a User Management API built with ASP.NET Core Minimal API for TechHive Solutions. It allows HR and IT departments to efficiently create, update, retrieve, and delete user records. The API was developed as a three-part final project for the <a href="https://www.coursera.org/learn/back-end-development-with-dotnet?specialization=microsoft-full-stack-developer" target="_blank">"Back-End Development with .NET"</a>, with a focus on leveraging Microsoft Copilot for code generation, enhancement, and debugging. This course is one of twelve courses required for obtaining the <a href="https://www.coursera.org/professional-certificates/microsoft-full-stack-developer" target="_blank">"Microsoft Full-Stack Developer Professional Certificate"</a>.
+
+An alternative Controller-based version of the TechHive User Management API was also developed to explore the differences in ASP.NET Core Web API architecture. The Controller API version can be viewed <a href="https://github.com/dotnetmurf/TechHiveAPI/" target="_blank">here</a>.
 
 ## Features
 - CRUD operations for user management (GET, POST, PUT, DELETE)
@@ -100,7 +104,8 @@ This project was developed as part of a back-end development course, with activi
 Regarding how Copilot was used in this project's development process, transcriptions of the prompts that were used and the conversations that occurred were captured and saved in text files. These files can be found in the `/wwwroot/docs` folder in the project.
 
 ## License
-This project is licensed under the GNU General Public License.
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
